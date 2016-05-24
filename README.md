@@ -50,7 +50,8 @@
     
     [super viewDidLoad];
     
-    // 设置数据源
+   // 设置数据源
+    self.page.dataSource = self;
     
     // 设置代理
     self.page.delegate = self;
