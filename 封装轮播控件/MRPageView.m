@@ -33,36 +33,61 @@
     
 }
 
+///**
+// *	@brief	设置图片资源
+// *
+// *	@param 	imageNames 	图片数组
+// */
+//- (void)setImageNames:(NSArray *)imageNames {
+//    
+//    _imageNames = imageNames;
+//    
+//    // 移除之前的所有的imageView
+//    [self.scrollview.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+//    
+//    for (int i = 0; i < imageNames.count; i++) {
+//        // 创建
+//        UIImageView *imageView = [[UIImageView alloc] init];
+//        
+//        imageView.image = [UIImage imageNamed:imageNames[i]];
+//        
+//        imageView.userInteractionEnabled = YES;
+//        
+//        imageView.tag = i;
+//        
+//        // 添加点击手势
+//        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageClick:)];
+//        
+//        [imageView addGestureRecognizer:recognizer];
+//        
+//        [self.scrollview addSubview:imageView];
+//    }
+//    
+//    // 设置总页数
+//    self.control.numberOfPages = imageNames.count;
+//}
+
 
 /**
- *	@brief 设置代理
+ *	@brief	设置数据源
  *
- *	@param 	delegate 	轮播的点击事件代理
+ *	@param 	dataSource
  */
-- (void)setDelegate:(id<MRPageViewDelegate>)delegate {
+- (void)setDataSource:(id<MRPageViewDataSource>)dataSource {
     
-    _delegate = delegate;
-    
-}
-
-
-/**
- *	@brief	设置图片资源
- *
- *	@param 	imageNames 	图片数组
- */
-- (void)setImageNames:(NSArray *)imageNames {
-    
-    _imageNames = imageNames;
+    _dataSource = dataSource;
     
     // 移除之前的所有的imageView
     [self.scrollview.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    for (int i = 0; i < imageNames.count; i++) {
+    // 获得数据个数
+    NSInteger count = [self.dataSource pageViewOfPages:self];
+    
+    for (int i = 0; i < count; i++) {
         // 创建
         UIImageView *imageView = [[UIImageView alloc] init];
         
-        imageView.image = [UIImage imageNamed:imageNames[i]];
+        imageView.image = [self.dataSource pageView:self imageForPageAtIndex:i];
         
         imageView.userInteractionEnabled = YES;
         
@@ -77,9 +102,8 @@
     }
     
     // 设置总页数
-    self.control.numberOfPages = imageNames.count;
+    self.control.numberOfPages = count;
 }
-
 
 
 /**
@@ -206,12 +230,14 @@
 - (void)imageClick:(UIGestureRecognizer *)sender {
 
     // 调用代理的方法
-    [self.delegate pageViewClick: sender.view.tag];
+    if([self.delegate respondsToSelector:@selector(pageView:didSelectRowAtIndex:)]) {
+        [self.delegate pageView:self didSelectRowAtIndex:sender.view.tag];
+    }
     
 }
 
 
-# warning 只要外部改变 frame 就会调用这个方法, 并且不是立刻改变，因为消息循环机制，会在所在方法块结束之后，
+# warning 只要外部改变 frame 就会调用这个方法, 并且不是立刻改变，因为消息循环机制，会在所在方法块结束之后
 - (void)layoutSubviews {
     
     [super layoutSubviews];
@@ -231,10 +257,12 @@
     
     self.control.frame = CGRectMake(pageX, pageY, pageW, pageH);
     
-    // 设置内容大小
-    self.scrollview.contentSize = CGSizeMake(self.imageNames.count * scrollW, 0);
+    int count = self.scrollview.subviews.count;
     
-    for (int i = 0; i < self.scrollview.subviews.count; i++) {
+    // 设置内容大小
+    self.scrollview.contentSize = CGSizeMake(count * scrollW, 0);
+    
+    for (int i = 0; i < count; i++) {
 
         // 取出控件设置frame
         UIImageView *imageView = self.scrollview.subviews[i];

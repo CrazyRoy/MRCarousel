@@ -110,10 +110,6 @@
 				604104921CED956A00CD9CC9 /* ViewController.m */,
 				604104BE1CED959900CD9CC9 /* MRPageView.h */,
 				604104BF1CED959900CD9CC9 /* MRPageView.m */,
-				604104941CED956A00CD9CC9 /* Main.storyboard */,
-				604104971CED956A00CD9CC9 /* Assets.xcassets */,
-				604104991CED956A00CD9CC9 /* LaunchScreen.storyboard */,
-				6041049C1CED956A00CD9CC9 /* Info.plist */,
 				6041048B1CED956A00CD9CC9 /* Supporting Files */,
 			);
 			path = "封装轮播控件";
@@ -122,6 +118,10 @@
 		6041048B1CED956A00CD9CC9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				604104941CED956A00CD9CC9 /* Main.storyboard */,
+				604104971CED956A00CD9CC9 /* Assets.xcassets */,
+				604104991CED956A00CD9CC9 /* LaunchScreen.storyboard */,
+				6041049C1CED956A00CD9CC9 /* Info.plist */,
 				6041048C1CED956A00CD9CC9 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -504,6 +504,7 @@
 				604104B71CED956A00CD9CC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		604104B81CED956A00CD9CC9 /* Build configuration list for PBXNativeTarget "封装轮播控件Tests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +513,7 @@
 				604104BA1CED956A00CD9CC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		604104BB1CED956A00CD9CC9 /* Build configuration list for PBXNativeTarget "封装轮播控件UITests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +522,7 @@
 				604104BD1CED956A00CD9CC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
