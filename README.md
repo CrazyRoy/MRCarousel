@@ -16,10 +16,6 @@
       
                            page.frame = CGRectMake(10, 50, 300, 130);
    
-   - 4.设置数据源
-                           
-                           page.imageNames = @[@"img_00", @"img_01", @"img_02", @"img_03", @"img_04"];
-   
 - **其他设置: **
    - 1.更改轮播间隔时间:  page.time = 3.0;
           
@@ -37,9 +33,7 @@
     if(_page == nil) {
         
         _page = [MRPageView pageView];
-        
-        _page.imageNames = @[@"img_00", @"img_01", @"img_02", @"img_03", @"img_04"];
-        
+          
         _page.currentColor = [UIColor orangeColor];
         
         _page.tintColor = [UIColor whiteColor];
@@ -56,6 +50,8 @@
     
     [super viewDidLoad];
     
+    // 设置数据源
+    
     // 设置代理
     self.page.delegate = self;
     
@@ -63,12 +59,27 @@
     
 }
 
+# pragma mark - <MRPageViewDataSource>
+
+- (NSInteger)pageViewOfPages:(MRPageView *)pageView {
+    
+    return self.images.count;
+}
+
+- (UIImage *)pageView:(MRPageView *)pageView imageForPageAtIndex:(NSInteger)index {
+    
+    UIImage *image = [UIImage imageNamed:self.images[index]];
+                      
+    return image;
+}
 
 # pragma mark - <MRPageViewDelegte>
-- (void)pageViewClick:(int)pageIndex {
+
+- (void)pageView:(MRPageView *)pageView didSelectRowAtIndex:(NSInteger)index {
     
-    NSLog(@"number -- %i", pageIndex);
+    NSLog(@"点击图片----%i", index);
 }
+
 ```
    
 - **简单效果图:**
